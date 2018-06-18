@@ -7,9 +7,14 @@
         <canvas id="mon_canvas">
             Message pour les navigateurs ne supportant pas encore canvas.
         </canvas>
-        <input id="nbGrain" value="Number Of starting grain (default: 10000)" name="aaaaaa">
+        <input onfocus="this.value=''" id="nbGrain" value="Number Of starting grain (default: 10000)" name="aaaaaa">
         <button type="button" id="start" onclick="start()">Start</button>
         <button type="button" id="hide" onclick="render()">Hide Render (faster)</button>
+        <div class="slider">
+          <p id="slideVal">Speed(1-500) : 1</p>
+          <input type="range" min="1" max="500" value="1" id="slider">
+        </div>
+
 
         <!-- <button type="button" id="on" onclick="start()"> Start </button>
         <button type="button" id="clean" onclick="clean()"> Clean </button> -->
@@ -24,6 +29,17 @@
       border: 0px;
       overflow: hidden; /*  Disable scrollbars */
       display: block;  /* No floating content on sides */
+    }
+
+    .slider {
+      position: absolute;
+      top: 100px;
+      width: 250px;
+
+      left: 50px;
+      z-index: 100;
+      display:block;
+      overflow: auto;
     }
 
     #nbGrain {

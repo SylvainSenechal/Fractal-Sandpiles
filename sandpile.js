@@ -59,7 +59,7 @@ var SandPile = {
   lastGrid: [],
   currentGrid: [],
   nbGrain: 10000,
-  speed: 200,
+  speed: 1,
   finished: false,
 
   render: true,
@@ -185,6 +185,12 @@ function render(){
   else{
     document.getElementById("hide").innerHTML = "Show Render (slower)"
   }
+}
+
+var slider = document.getElementById("slider");
+slider.oninput = function() {
+  SandPile.speed = this.value
+  document.getElementById("slideVal").innerHTML = "Speed(1-500) : " + this.value
 }
 
 function start(){
