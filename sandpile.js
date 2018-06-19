@@ -60,8 +60,9 @@ var SandPile = {
   currentGrid: [],
   nbGrain: 10000,
   speed: 1,
-  finished: false,
+  drawSize: 1,
 
+  finished: false,
   render: true,
 }
 
@@ -136,12 +137,6 @@ function redefineGrids(){
   SandPile.currentGrid = grid
 }
 
-document.onclick = function(e){
-}
-
-
-
-
 function dessin(){
   ctx.clearRect(0, 0, width, height)
 
@@ -159,7 +154,7 @@ function dessin(){
       else if(SandPile.currentGrid[i][j] == 3){
         ctx.fillStyle = "rgb(255, 0, 0)"
       }
-      ctx.fillRect(i+SandPile.offsetX, j+SandPile.offsetY, 1, 1);
+      ctx.fillRect((i*SandPile.drawSize)+SandPile.offsetX, (j*SandPile.drawSize)+SandPile.offsetY, SandPile.drawSize, SandPile.drawSize);
     }
   }
 
@@ -193,6 +188,29 @@ slider.oninput = function() {
   document.getElementById("slideVal").innerHTML = "Speed(1-500) : " + this.value
 }
 
+var draw = document.getElementById("draw");
+draw.oninput = function() {
+  if(this.value == 1){
+    SandPile.offsetX += 150
+    SandPile.offsetY += 140
+  }
+  else if(this.value == 2 && SandPile.drawSize == 3){
+    SandPile.offsetX += 150
+    SandPile.offsetY += 140
+  }
+  else if(this.value == 2 && SandPile.drawSize == 1){
+    SandPile.offsetX -= 150
+    SandPile.offsetY -= 140
+  }
+  else if(this.value == 3){
+    SandPile.offsetX -= 150
+    SandPile.offsetY -= 140
+  }
+
+  SandPile.drawSize = this.value
+  document.getElementById("drawP").innerHTML = "Draw Size(1-3) : " + this.value
+}
+
 function start(){
   SandPile.nbGrain = document.getElementById("nbGrain").value
   SandPile.sizeX = 10
@@ -206,6 +224,15 @@ function start(){
   SandPile.currentGrid = []
   initLastSandPile()
   initCurrentGrid()
-  console.log(SandPile.currentGrid)
   loop()
+}
+
+
+document.onwheel = function(e){ // !! pas trop dezoomer pour pas sortir du cadre
+  if(e.deltaY<0){ // zoom
+		ctx.scale(1.1, 1.1)
+	}
+	else{ // dezoom
+    ctx.scale(0.9, 0.9)
+	}
 }
